@@ -11,11 +11,16 @@
  **/
 int main(int ac, char **av)
 {
-	char *start_sympole = "$ my_simple_shell# ";/*my shell start sympole*/
+	char *input_data;
+	char **split_data;
+	char delimeter[] = " \n\t";
+	char *start_sympole = "($) ";/*my shell start sympole*/
 
 	(void)ac;
 	(void)av;
 
-	start_shell(start_sympole);
+	input_data = start_shell(start_sympole);
+	split_data = tokenize_input(input_data, delimeter); 
+
 	return (0);
 }
