@@ -45,7 +45,7 @@ int num_words(char *str, char *delimeter)
 char **tokenize_input(char *str, char *delimeter)
 {
 	char **input_data = NULL;
-	int i, j, count, n, word_len, z = 0, x_len = 0;
+	int i, j = 0, count, n, word_len, z = 0, x_len = 0;
 
 	if (str == NULL || num_words(str, delimeter) == 0)
 		return (NULL);
@@ -55,7 +55,7 @@ char **tokenize_input(char *str, char *delimeter)
 		return (NULL);
 	for (i = 0; i < n; i++)
 	{
-		for (; str[j] == *delimeter || str[j]  == '\0';) /*stop at end of each word*/
+		while (str[j] == *delimeter || str[j]  == '\0') /*stop at end of each word*/
 			j++;
 		z = j;
 		for (; *(str + z) && *(str + z) != *delimeter;)

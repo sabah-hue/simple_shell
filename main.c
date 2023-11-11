@@ -11,16 +11,18 @@
  **/
 int main(int ac, char **av)
 {
-	char *input_data;
-	char **split_data;
 	char delimeter[] = " \n\t";
 	char *start_sympole = "($) ";/*my shell start sympole*/
 
 	(void)ac;
 	(void)av;
 
-	input_data = start_shell(start_sympole);
-	split_data = tokenize_input(input_data, delimeter); 
-
+	if (isatty(STDIN_FILENO))
+	{
+		start_shell(start_sympole, delimeter);
+	}
+	else
+		/* run_non_interactive(); */
+		printf("non interact mode");
 	return (0);
 }
