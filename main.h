@@ -17,5 +17,10 @@ void run_non_interactive(void);
 void execute_commands(char **split_data);
 char *_getenv(const char *name);
 void show_env();
+int _strlen(char *str);
+int _strcmp(char *str1, char *str2);
+int _strncmp(const char *str1, const char *str2, size_t n_cmp);
+size_t count_words(char *s, char *delimeter);
+char **_strtok(char *s, char *delimeter);
 
 #endif

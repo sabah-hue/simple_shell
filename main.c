@@ -11,18 +11,12 @@
  **/
 int main(int ac, char **av)
 {
-	char delimeter[] = " \n\t";
+	char delimeter[] = " ";
 	char *start_sympole = "($) ";/*my shell start sympole*/
 
 	(void)ac;
 	(void)av;
-
-	if (isatty(STDIN_FILENO))
-	{
-		start_shell(start_sympole, delimeter);
-	}
-	else
-		/* run_non_interactive(); */
-		printf("non interact mode");
+	
+	start_shell(start_sympole, delimeter);
 	return (0);
 }

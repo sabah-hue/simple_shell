@@ -23,17 +23,20 @@ char *_getenv(const char *name)
 
 
 /**
- * show_env -  print environment variables.                                                        *
+ * show_env - print environment variables.
+ *
  * Description: A function that print environment variables.
  *
- * Return: nothing.                                                                           
+ * Return: nothing.
  **/
-void show_env()
+void show_env(void)
 {
 	char **e = environ;
 
 	while (*e != NULL)
 	{
-		printf("%s\n", *e);
+		write(1, *e, _strlen(*e));
+		write(1, "\n", 1);
+		e++;
 	}
 }
