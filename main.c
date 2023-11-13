@@ -9,14 +9,11 @@
  *
  * Return: 0 on success
  **/
-int main(int ac, char **av)
+int main()
 {
-	char delimeter[] = " ";
+	char delimeter[] = " \t\n";
 	char *start_sympole = "($) ";/*my shell start sympole*/
 
-	(void)ac;
-	(void)av;
-	
 	start_shell(start_sympole, delimeter);
 	return (0);
 }

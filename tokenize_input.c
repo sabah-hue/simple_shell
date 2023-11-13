@@ -11,22 +11,20 @@
  **/
 int num_words(char *str, char *delimeter)
 {
-	int i, j, str_len = 0, words = 0, word_len;
+	int i, j, str_len = 0, words = 0;
 
 	if (str == NULL)
 		return (-1);
-
-	for (i = 0; str[i] != '\0'; i++)
+	for (i = 0; *(str + i); i++)
+	{
 		str_len++;
+	}
 	for (j = 0; j < str_len; j++)
 	{
-		if (str[j] != *delimeter)
+		if (*(str + j) != *delimeter)
 		{
 			words++;
-			word_len = 0;
-		while (str[j + word_len] && str[j + word_len] != *delimeter)
-			word_len++;
-		j = j + word_len;
+			j = j + split_len(str + j, delimeter);
 		}
 	}
 	return (words);
@@ -45,39 +43,39 @@ int num_words(char *str, char *delimeter)
 char **tokenize_input(char *str, char *delimeter)
 {
 	char **input_data = NULL;
-	int i, j = 0, count, n, word_len, z = 0, x_len = 0;
+	int i, j = 0, count, n, word_len;
 
 	if (str == NULL || num_words(str, delimeter) == 0)
 		return (NULL);
 	n = num_words(str, delimeter); /*memory allocation for number of words*/
+	printf("word = %d\n", n);
 	input_data = malloc(sizeof(char *) * (n + 2));
 	if (input_data == NULL)
 		return (NULL);
 	for (i = 0; i < n; i++)
 	{
-		while (str[j] == *delimeter || str[j]  == '\0') /*stop at end of each word*/
-			j++;
-		z = j;
-		for (; *(str + z) && *(str + z) != *delimeter;)
+		while (str[j] == *delimeter) /*stop at end of each word*/
 		{
-			x_len++, z++;
+			j++;
 		}
-			word_len = x_len;
-			x_len = 0; /*M-alloc for row-2d-arr*/
+		word_len = split_len(str + j, delimeter);
+		/*M-alloc for row-2d-arr*/
 		input_data[i] = malloc(sizeof(char) * (word_len + 1));
 		if (input_data[i] == NULL)
 		{
 			j = j - 1;
 			while (j >= 0)
 			{
-				free(input_data[j]), j--;
+				free(input_data[j]);
+				j--;
 			}
 			free(input_data);
 			return (NULL);
 		}
 		for (count = 0; count < word_len; count++)
 		{
-			input_data[i][count] = str[j], j++;
+			input_data[i][count] = str[j];
+			j++;
 		}
 		input_data[i][count] = '\0';
 	}

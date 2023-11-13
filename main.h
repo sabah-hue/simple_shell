@@ -22,5 +22,9 @@ int _strcmp(char *str1, char *str2);
 int _strncmp(const char *str1, const char *str2, size_t n_cmp);
 size_t count_words(char *s, char *delimeter);
 char **_strtok(char *s, char *delimeter);
+char **tok_input(char *s, char *d, ssize_t n);
+int split_len(char *s, char *d);
+int split_len(char *s, char *d);
+char *_strcpy(char *dest, char *src);
 
 #endif

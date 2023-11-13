@@ -13,7 +13,7 @@ size_t count_words(char *s, char *delimeter)
 {
 	size_t words = 0;
 
-	if (strtok(s, delimeter))
+	if(strtok(s, delimeter))
 		words = 1;
 	while (strtok(NULL, delimeter))
 		++words;
@@ -27,24 +27,32 @@ size_t count_words(char *s, char *delimeter)
  * @s: input string, input parameter
  * @delimeter: separator between words
  *
- * Return: 1 on success, -1 on failure
+ * Return: pointer to array of words.
  **/
 char **_strtok(char *s, char *delimeter)
 {
 	char **split_data = NULL;
 	size_t buf_size = 0;
-	int i, j = 0;
+	size_t i, j = 0;
 	char null_term = '\0';
+	size_t len = strlen(s);
+	int x;
 
 	buf_size = count_words(s, delimeter);
 	if (buf_size > 0)
 	{
 		split_data = malloc(sizeof(char *) * (buf_size + 1));
-		for (i = 0; i < _strlen(s); ++i)
+		if (split_data == NULL)
+		{
+			perror("memory allocation error");
+			exit(EXIT_FAILURE);
+		}
+		for (i = 0; i < len; ++i)
 		{
 			if (s[i] != '\0' && null_term == '\0')
 			{	
 				split_data[j] = s + i;
+				printf("code : %s\n", split_data[j]);
 				++j;
 	
 			}
@@ -52,5 +60,9 @@ char **_strtok(char *s, char *delimeter)
 		}
 		split_data[j] = NULL;
 	}
+for (x = 0; split_data[x] != NULL; x++)
+{
+	/*printf("test : %s\n", split_data[x]);*/
+}
 	return (split_data);
 }

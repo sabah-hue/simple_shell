@@ -19,6 +19,26 @@ int _strlen(char *str)
 }
 
 /**
+ * _strcpy - copy string one 
+ *
+ * Description: A function that displays the information contained in the ELF header at the start of an ELF file.
+ * @dest: string which hold a copy from src string
+ * @src: input string
+ *
+ * Return: 1 on success, -1 on failure
+ **/
+char *_strcpy(char *dest, char *src)
+{
+	int i;
+	for (i = 0; src[i] != '\0'; i++)
+	{
+		dest[i] = src[i];
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+/**
  * _strcmp - compare strings
  *
  * Description: a function that  cpmpare strings
@@ -69,4 +89,26 @@ int _strncmp(const char *str1, const char *str2, size_t n_cmp)
 		return (0);
 	else
 		return (-15);
+}
+
+/**
+ * split_len - count number of chars
+ *
+ * Description: A function that count number of char in one word.
+ * @s: input string
+ * @d: delimeter, separator between words.
+ *
+ * Return: number of char in word
+ **/
+int split_len(char *s, char *d)
+{
+	int i = 0;
+	int j = 0;
+
+	while (*(s + i) && *(s + i) != *d)
+	{
+		i++;
+		j++;
+	}
+	return (j);
 }
