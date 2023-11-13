@@ -27,7 +27,6 @@ void start_shell(char *start_sympole, char *delimeter)
 		}
 		split_data = tok_input(user_data, delimeter, chars_r_num);
 		/*split_data = tokenize_input(user_data, delimeter);*/
-		/*split_data = _strtok(spare, delimeter);*/
 		execute_commands(split_data);
 	}
 	free(user_data);

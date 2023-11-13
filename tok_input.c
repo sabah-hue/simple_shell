@@ -6,8 +6,9 @@
  * Description: A function that tokanize input string.
  * @s: input string.
  * @d: delimeter, separated between input variables.
- * 
- * Return: pointer to array of tokanize words.                                          
+ * @n: number of chars entered by user.
+ *
+ * Return: pointer to array of tokanize words.
  **/
 char **tok_input(char *s, char *d, ssize_t n)
 {
@@ -32,13 +33,14 @@ char **tok_input(char *s, char *d, ssize_t n)
 	words++;
 	arr = malloc(sizeof(char *) * words);
 	token = strtok(copy_str, d);
-	 for (i = 0; token != NULL; i++)
-	 {
-		 arr[i] = malloc(sizeof(char) * _strlen(token));
-		 _strcpy(arr[i], token);
-		 token = strtok(NULL, d);
-	 }
-	 arr[i] = NULL;
-	 free(copy_str);
-	 return (arr);
+	for (i = 0; token != NULL; i++)
+	{
+		arr[i] = malloc(sizeof(char) * _strlen(token));
+		_strcpy(arr[i], token);
+		token = strtok(NULL, d);
+	}
+	arr[i] = NULL;
+	free(copy_str);
+
+	return (arr);
 }

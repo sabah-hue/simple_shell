@@ -4,7 +4,7 @@
  * _strlen - get the length of a string
  *
  * Description: Function get the length of input string.
- * @s: pointer to the string
+ * @str: pointer to the string
  *
  * Return: the length of string
  **/
@@ -19,9 +19,10 @@ int _strlen(char *str)
 }
 
 /**
- * _strcpy - copy string one 
+ *_strcpy - copy string from src to dest.
  *
- * Description: A function that displays the information contained in the ELF header at the start of an ELF file.
+ * Description: A function that displays the information
+ * contained in the ELF header at the start of an ELF file.
  * @dest: string which hold a copy from src string
  * @src: input string
  *
@@ -30,6 +31,7 @@ int _strlen(char *str)
 char *_strcpy(char *dest, char *src)
 {
 	int i;
+
 	for (i = 0; src[i] != '\0'; i++)
 	{
 		dest[i] = src[i];
@@ -50,6 +52,7 @@ char *_strcpy(char *dest, char *src)
 int _strcmp(char *str1, char *str2)
 {
 	int cmp_value;
+
 	while (*str1 && *str2 && *str1 == *str2)
 	{
 		str1++;
@@ -72,7 +75,7 @@ int _strcmp(char *str1, char *str2)
  * @n_cmp: number of bytes need to compare.
  *
  * Return: result of compare value, 0 in matching case.
- * */
+ **/
 int _strncmp(const char *str1, const char *str2, size_t n_cmp)
 {
 	size_t i = 0;
