@@ -36,6 +36,11 @@ char *_getenv(const char *name)
 		}
 		i++;
 	}
+	for (i = 0; e[i]; i++)
+	{
+		free(e[i]);
+	}
+	free(e);
 	return (NULL);
 }
 

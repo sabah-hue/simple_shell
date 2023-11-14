@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #include <string.h>
 
 extern char **environ;
@@ -25,5 +26,7 @@ int split_len(char *s, char *d);
 char *_strcpy(char *dest, char *src);
 char *_strtok(char *line,const char *delim);
 int check_command(char **split_data);
+char *_which(char *x);
+char *str_concat(char *s1, char *s2);
 
 #endif
