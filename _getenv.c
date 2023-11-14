@@ -10,17 +10,34 @@
  **/
 char *_getenv(const char *name)
 {
-	int i = 0;
+	int i = 0, index;
 	char **e = environ;
+	char *x;
 
+	if (name == NULL)
+		return (NULL);
 	while (e[i])
 	{
-		if (*e == name)
-			return (*e);
+		index = 0; /* start count */
+		if (name[index] == e[i][index])
+		{
+			while (name[index] != '\0')
+			{
+				if (name[index] != e[i][index])
+					break;
+				index++;
+			}
+			if (name[index] == '\0')
+			{
+				x = e[i] + index + 1;
+				/* x refere to value of the name */
+				return (x);
+			}
+		}
+		i++;
 	}
 	return (NULL);
 }
-
 
 /**
  * show_env - print environment variables.
@@ -40,3 +57,5 @@ void show_env(void)
 		e++;
 	}
 }
+
+

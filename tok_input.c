@@ -1,6 +1,21 @@
 #include "main.h"
 
 /**
+ * _strtok - tokenize input string into words.
+ *
+ * Description: A function that tokenize
+ * input string into words depend on delimeter.
+ * @line: input string from user.
+ * @delim: separator betwwen words.
+ *
+ * Return: pointer to word of string.
+ **/
+char *_strtok(char *line, const char *delim)
+{
+	return (strtok(line, delim));
+}
+
+/**
  * tok_input -  divide input string.
  *
  * Description: A function that tokanize input string.
@@ -12,35 +27,44 @@
  **/
 char **tok_input(char *s, char *d, ssize_t n)
 {
-	char *copy_str = NULL;
-	char *token;
-	char **arr = NULL;
+	char *copy_str = NULL, *token, **arr = NULL;
 	int i, words = 0;
 
 	copy_str = malloc(sizeof(char) * n);
 	if (copy_str == NULL)
 	{
 		perror("Error ");
-		return (NULL);
+		free(copy_str);
+		exit(EXIT_FAILURE);
 	}
 	_strcpy(copy_str, s);
-	token = strtok(s, d);
+	token = _strtok(s, d);
 	while (token)
 	{
 		words++;
-		token = strtok(NULL, d);
+		token = _strtok(NULL, d);
 	}
 	words++;
 	arr = malloc(sizeof(char *) * words);
-	token = strtok(copy_str, d);
+	if (arr == NULL)
+	{
+		perror("Error ");
+		free(arr);
+		exit(EXIT_FAILURE);
+	}
+	token = _strtok(copy_str, d);
 	for (i = 0; token != NULL; i++)
 	{
 		arr[i] = malloc(sizeof(char) * _strlen(token));
+		if (arr[i] == NULL)
+		{
+			perror("Error ");
+			exit(EXIT_FAILURE);
+		}
 		_strcpy(arr[i], token);
-		token = strtok(NULL, d);
+		token = _strtok(NULL, d);
 	}
 	arr[i] = NULL;
 	free(copy_str);
-
 	return (arr);
 }

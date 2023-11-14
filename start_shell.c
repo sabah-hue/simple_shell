@@ -15,20 +15,32 @@ void start_shell(char *start_sympole, char *delimeter)
 	size_t buffer_size = 0;
 	ssize_t chars_r_num;
 	char **split_data = NULL;
+	int i;
 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, start_sympole, _strlen(start_sympole));
 		chars_r_num = getline(&user_data, &buffer_size, stdin);
-		if (!_strncmp(user_data, "exit", 4) || chars_r_num == -1)
+		if ((!_strncmp(user_data, "exit", 4) && chars_r_num == 5)
+				|| chars_r_num == -1)
 		{
-			break;
+			free(user_data);
+			exit(EXIT_SUCCESS);
 		}
+		user_data[chars_r_num - 1] = '\0';
 		split_data = tok_input(user_data, delimeter, chars_r_num);
-		/*split_data = tokenize_input(user_data, delimeter);*/
+		/**
+		*split_data = tokenize_input(user_data, delimeter);
+		* use this code to tokenize line without using strtok
+		* but it fail in testing
+		**/
 		execute_commands(split_data);
 	}
 	free(user_data);
+	for (i = 0; split_data[i] != NULL; i++)
+	{
+		free(split_data[i]);
+	}
 	free(split_data);
 }
