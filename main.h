@@ -24,7 +24,7 @@ char **tok_input(char *s, char *d, ssize_t n);
 int split_len(char *s, char *d);
 int split_len(char *s, char *d);
 char *_strcpy(char *dest, char *src);
-char *_strtok(char *line,const char *delim);
+char *_strtok(char *line, const char *delim);
 int check_command(char **split_data);
 char *_which(char *x);
 char *str_concat(char *s1, char *s2);
