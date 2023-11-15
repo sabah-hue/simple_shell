@@ -22,11 +22,16 @@ void start_shell(char *start_sympole, char *delimeter)
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, start_sympole, _strlen(start_sympole));
 		chars_r_num = getline(&user_data, &buffer_size, stdin);
-		if ((!_strncmp(user_data, "exit", 4) && chars_r_num == 5)
-				|| chars_r_num == -1)
+		if (!_strncmp(user_data, "exit", 4) && chars_r_num == 5)
 		{
 			free(user_data);
-			exit(EXIT_SUCCESS);
+			exit(0);
+		}
+		if (chars_r_num == -1)
+		{
+			write(STDOUT_FILENO, "\n", 1);
+			free(user_data);
+			exit(0);
 		}
 		/*user_data[chars_r_num - 1] = '\0';*/
 		split_data = tok_input(user_data, delimeter, chars_r_num);

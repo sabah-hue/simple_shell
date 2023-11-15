@@ -33,9 +33,8 @@ char **tok_input(char *s, char *d, ssize_t n)
 	copy_str = malloc(sizeof(char) * n);
 	if (copy_str == NULL)
 	{
-		perror("Error ");
 		free(copy_str);
-		exit(EXIT_FAILURE);
+		return (NULL);
 	}
 	_strcpy(copy_str, s);
 	token = _strtok(s, d);
@@ -50,7 +49,7 @@ char **tok_input(char *s, char *d, ssize_t n)
 	{
 		perror("Error ");
 		free(arr);
-		exit(EXIT_FAILURE);
+		return (NULL);
 	}
 	token = _strtok(copy_str, d);
 	for (i = 0; token != NULL; i++)
@@ -59,7 +58,7 @@ char **tok_input(char *s, char *d, ssize_t n)
 		if (arr[i] == NULL)
 		{
 			perror("Error ");
-			exit(EXIT_FAILURE);
+			return (NULL);
 		}
 		_strcpy(arr[i], token);
 		token = _strtok(NULL, d);

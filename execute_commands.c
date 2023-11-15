@@ -68,9 +68,7 @@ char *_which(char *x)
 		path_dir = _strtok(NULL, ":");
 	}
 	free(copy_path);
-	dprintf(STDERR_FILENO, "%s", "Usage: simple_shell\n");
-	fprintf(stderr, "%s :", _getenv("_"));
-	exit(127);
+	perror(_getenv("_"));
 	return (NULL);
 }
 
@@ -144,24 +142,20 @@ void execute_commands(char **split_data)
 		full_path = _which(split_data[0]);
 		if (full_path)
 			split_data[0] = full_path;
-		else
-			return;
 	}
 	if (access(split_data[0], F_OK) == 0 && access(split_data[0], X_OK) == 0)
 	{
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("Error ");
-		dprintf(STDERR_FILENO, "%s", "Usage: simple_shell\n");
-		return;
+		perror(_getenv("_"));
 	}
 	if (pid == 0)
 	{
 		if (execve(split_data[0], split_data, environ) == -1)
 		{
-			dprintf(STDERR_FILENO, "%s", "Usage: simple_shell\n");
-			fprintf(stderr, "%s :", _getenv("_")), exit(127);
+			perror(split_data[0]);
+			exit(127);
 		}
 	}
 	else
