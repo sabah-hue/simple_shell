@@ -13,8 +13,7 @@ int check_command(char **split_data)
 
 	if (!_strncmp(split_data[0], "echo", 4) && !_strncmp(split_data[1], "$?", 2))
 	{
-		write(1, "0", 1);
-		write(1, "\n", 1);
+		printf("0\n");
 		return (1);
 	}
 	if (!_strncmp(split_data[0], "echo", 4) && !_strncmp(split_data[1], "$$", 2))
@@ -30,7 +29,7 @@ int check_command(char **split_data)
 	}
 	if (!_strncmp(split_data[0], "exit", 4) && split_data[1] != NULL)
 	{
-		printf("exit %s\n", split_data[1]);
+		printf("%s\n", split_data[1]);
 		return (1);
 	}
 	return (0);
@@ -57,8 +56,6 @@ char *_which(char *x)
 	{
 		path_edit = malloc(strlen(path_dir) + 2 + strlen(x) + 1);
 		sprintf(path_edit, "%s/%s", path_dir, x);
-	/*	path_edit = str_concat(path_dir, "/");*/
-	/*	path_full = str_concat(path_edit, x);*/
 		if (access(path_edit, F_OK) == 0 && access(path_edit, X_OK) == 0)
 		{
 			free(copy_path);
@@ -67,7 +64,6 @@ char *_which(char *x)
 		free(path_edit);
 		path_dir = _strtok(NULL, ":");
 	}
-	free(copy_path);
 	perror(_getenv("_"));
 	return (NULL);
 }
@@ -84,31 +80,37 @@ char *_which(char *x)
 char *str_concat(char *s1, char *s2)
 {
 	char *a;
-	int i, j, x, size;
+	int i, len1, len2, size;
 
 	if (s1 != NULL)
 	{
-		for (i = 0; s1[i] != '\0'; i++)
+		for (len1 = 0; s1[len1] != '\0'; len1++)
 		{
 		}
 	}
 	if (s2 != NULL)
 	{
-		for (j = 0; s2[j] != '\0'; j++)
+		for (len2 = 0; s2[len2] != '\0'; len2++)
 		{
 		}
 	}
-	size = i + j;
+	size = len1 + len2;
 	a = malloc(sizeof(char) * size + 1);
+	if (a == NULL)
+		return (NULL);
 	if (a != NULL)
 	{
-		for (x = 0; x < i; x++)
+		while (i < len1)
 		{
 			a[i] = s1[i];
+			i++;
 		}
-		for (x = 0; x < j; x++, i++)
+		i = 0;
+		while (i < len2)
 		{
-			a[i] = s2[x];
+			a[len1] = s2[i];
+			i++;
+			len1++;
 		}
 		a[i] = '\0';
 	}
@@ -141,7 +143,10 @@ void execute_commands(char **split_data)
 	{
 		full_path = _which(split_data[0]);
 		if (full_path)
+		{
 			split_data[0] = full_path;
+			printf("%s\n", split_data[0]);
+		}
 	}
 	if (access(split_data[0], F_OK) == 0 && access(split_data[0], X_OK) == 0)
 	{

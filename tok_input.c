@@ -52,13 +52,13 @@ char **tok_input(char *s, char *d, ssize_t n)
 	token = _strtok(copy_str, d);
 	while (token)
 	{
-		arr[i] = malloc(sizeof(char) * _strlen(token));
+		arr[i] = malloc(sizeof(char) * strlen(token));
 		if (arr[i] == NULL)
 		{
 			free(arr[i]);
 			return (NULL);
 		}
-		strcpy(arr[i], token);
+		strcpy(arr[i] ,token);
 		token = _strtok(NULL, d);
 		i++;
 	}

@@ -57,8 +57,7 @@ void show_env(void)
 
 	while (*e != NULL)
 	{
-		write(1, *e, _strlen(*e));
-		write(1, "\n", 1);
+		printf("%s\n", *e);
 		e++;
 	}
 }

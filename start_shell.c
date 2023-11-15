@@ -20,21 +20,27 @@ void start_shell(char *start_sympole, char *delimeter)
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, start_sympole, _strlen(start_sympole));
+			printf("%s", start_sympole);
 		chars_r_num = getline(&user_data, &buffer_size, stdin);
-		if (!_strncmp(user_data, "exit", 4) && chars_r_num == 5)
+		if (!_strncmp(user_data, "exit", 4) && chars_r_num == 5) 
 		{
 			free(user_data);
 			exit(0);
 		}
 		if (chars_r_num == -1)
 		{
-			write(STDOUT_FILENO, "\n", 1);
+			printf("\n");
 			free(user_data);
 			exit(0);
 		}
 		/*user_data[chars_r_num - 1] = '\0';*/
 		split_data = tok_input(user_data, delimeter, chars_r_num);
+		if (split_data == NULL)
+		{
+			for (i = 0; split_data[i] != NULL; i++)
+				free(split_data[i]);
+			free(split_data);
+		}
 		/**
 		*split_data = tokenize_input(user_data, delimeter);
 		* use this code to tokenize line without using strtok
