@@ -68,7 +68,9 @@ char *_which(char *x)
 		path_dir = _strtok(NULL, ":");
 	}
 	free(copy_path);
-	perror(_getenv("_"));
+	dprintf(STDERR_FILENO, "%s", "Usage: simple_shell\n");
+	fprintf(stderr, "%s :", _getenv("_"));
+	exit(127);
 	return (NULL);
 }
 
@@ -151,14 +153,15 @@ void execute_commands(char **split_data)
 	if (pid == -1)
 	{
 		perror("Error ");
+		dprintf(STDERR_FILENO, "%s", "Usage: simple_shell\n");
 		return;
 	}
 	if (pid == 0)
 	{
 		if (execve(split_data[0], split_data, environ) == -1)
 		{
-			fprintf(stderr, "%s :", _getenv("_"));
-			exit(127);
+			dprintf(STDERR_FILENO, "%s", "Usage: simple_shell\n");
+			fprintf(stderr, "%s :", _getenv("_")), exit(127);
 		}
 	}
 	else
