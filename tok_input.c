@@ -21,14 +21,13 @@ char *_strtok(char *line, const char *delim)
  * Description: A function that tokanize input string.
  * @s: input string.
  * @d: delimeter, separated between input variables.
- * @n: number of chars entered by user.
- *
+ * @n: number of chars entered by user
  * Return: pointer to array of tokanize words.
  **/
 char **tok_input(char *s, char *d, ssize_t n)
 {
 	char *copy_str = NULL, *token, **arr = NULL;
-	int i, words = 0;
+	int i = 0, words = 0;
 
 	copy_str = malloc(sizeof(char) * n);
 	if (copy_str == NULL)
@@ -36,7 +35,7 @@ char **tok_input(char *s, char *d, ssize_t n)
 		free(copy_str);
 		return (NULL);
 	}
-	_strcpy(copy_str, s);
+	strcpy(copy_str, s);
 	token = _strtok(s, d);
 	while (token)
 	{
@@ -47,21 +46,21 @@ char **tok_input(char *s, char *d, ssize_t n)
 	arr = malloc(sizeof(char *) * words);
 	if (arr == NULL)
 	{
-		perror("Error ");
 		free(arr);
 		return (NULL);
 	}
 	token = _strtok(copy_str, d);
-	for (i = 0; token != NULL; i++)
+	while (token)
 	{
 		arr[i] = malloc(sizeof(char) * _strlen(token));
 		if (arr[i] == NULL)
 		{
-			perror("Error ");
+			free(arr[i]);
 			return (NULL);
 		}
-		_strcpy(arr[i], token);
+		strcpy(arr[i], token);
 		token = _strtok(NULL, d);
+		i++;
 	}
 	arr[i] = NULL;
 	free(copy_str);
