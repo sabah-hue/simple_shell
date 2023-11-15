@@ -17,15 +17,15 @@ void start_shell(char *start_sympole, char *delimeter)
 	char **split_data = NULL;
 	int i;
 
-	while (isatty(STDIN_FILENO))
+	while (1)
 	{
-		write(STDOUT_FILENO, start_sympole, _strlen(start_sympole));
+		if (isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, start_sympole, _strlen(start_sympole));
 		chars_r_num = getline(&user_data, &buffer_size, stdin);
 		if ((!_strncmp(user_data, "exit", 4) && chars_r_num == 5)
 				|| chars_r_num == -1)
 		{
 			free(user_data);
-			write(STDOUT_FILENO, "\n", 1);
 			exit(EXIT_SUCCESS);
 		}
 		/*user_data[chars_r_num - 1] = '\0';*/

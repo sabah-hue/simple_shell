@@ -157,8 +157,8 @@ void execute_commands(char **split_data)
 	{
 		if (execve(split_data[0], split_data, environ) == -1)
 		{
-			perror(_getenv("_"));
-			exit(EXIT_FAILURE);
+			fprintf(stderr, "%s :", _getenv("_"));
+			exit(127);
 		}
 	}
 	else
