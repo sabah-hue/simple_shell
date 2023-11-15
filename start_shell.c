@@ -22,7 +22,7 @@ void start_shell(char *start_sympole, char *delimeter)
 		if (isatty(STDIN_FILENO))
 			printf("%s", start_sympole);
 		chars_r_num = getline(&user_data, &buffer_size, stdin);
-		if (!_strncmp(user_data, "exit", 4) && chars_r_num == 5) 
+		if (!_strncmp(user_data, "exit", 4) && chars_r_num == 5)
 		{
 			free(user_data);
 			exit(0);
@@ -41,11 +41,6 @@ void start_shell(char *start_sympole, char *delimeter)
 				free(split_data[i]);
 			free(split_data);
 		}
-		/**
-		*split_data = tokenize_input(user_data, delimeter);
-		* use this code to tokenize line without using strtok
-		* but it fail in testing
-		**/
 		execute_commands(split_data);
 	}
 	free(user_data);

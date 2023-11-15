@@ -58,7 +58,7 @@ char **tok_input(char *s, char *d, ssize_t n)
 			free(arr[i]);
 			return (NULL);
 		}
-		strcpy(arr[i] ,token);
+		strcpy(arr[i], token);
 		token = _strtok(NULL, d);
 		i++;
 	}
