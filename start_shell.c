@@ -32,6 +32,7 @@ void start_shell(char *start_sympole, char *delimeter)
 		{
 			printf("\n");
 			free(user_data);
+			free(user_data++);
 			free(split_data);
 			exit(0);
 		}
