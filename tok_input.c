@@ -29,7 +29,7 @@ char **tok_input(char *s, char *d, ssize_t n)
 	char *copy_str = NULL, *token, **arr = NULL;
 	int i = 0, words = 0;
 
-	copy_str = malloc(sizeof(char) * n);
+	copy_str = malloc(sizeof(char) * n + 1);
 	if (copy_str == NULL)
 	{
 		free(copy_str);
@@ -52,7 +52,7 @@ char **tok_input(char *s, char *d, ssize_t n)
 	token = _strtok(copy_str, d);
 	while (token)
 	{
-		arr[i] = malloc(sizeof(char) * strlen(token));
+		arr[i] = malloc(sizeof(char) * strlen(token) + 1);
 		if (arr[i] == NULL)
 		{
 			free(arr[i]);

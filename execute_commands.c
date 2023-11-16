@@ -147,19 +147,18 @@ void execute_commands(char **split_data)
 			split_data[0] = full_path;
 			printf("%s\n", split_data[0]);
 		}
+		else
+			free(full_path);
 	}
 	if (access(split_data[0], F_OK) == 0 && access(split_data[0], X_OK) == 0)
 	{
 	pid = fork();
-	if (pid == -1)
-	{
-		perror(_getenv("_"));
-	}
 	if (pid == 0)
 	{
 		if (execve(split_data[0], split_data, environ) == -1)
 		{
 			perror(split_data[0]);
+			free(split_data[0]);
 			exit(127);
 		}
 	}
