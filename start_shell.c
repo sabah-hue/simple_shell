@@ -11,10 +11,9 @@
  **/
 void start_shell(char *start_sympole, char *delimeter)
 {
-	char *user_data = NULL;
+	char *user_data = NULL, **split_data = NULL;
 	size_t buffer_size = 0;
 	ssize_t chars_r_num;
-	char **split_data = NULL;
 	int i;
 
 	while (1)
