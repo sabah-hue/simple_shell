@@ -60,8 +60,12 @@ char *_which(char *x)
 	path_dir = _strtok(copy_path, ":");
 	while (path_dir && x)
 	{
-		path_edit = malloc(strlen(path_dir) + strlen(x) + 3);
-		sprintf(path_edit, "%s/%s", path_dir, x);
+		path_edit = str_concat(path_dir, x);
+		if (path_edit == NULL)
+		{
+			free(copy_path);
+			return (NULL);
+		}
 		if (access(path_edit, F_OK) == 0 && access(path_edit, X_OK) == 0)
 		{
 			free(copy_path);
@@ -87,40 +91,17 @@ char *_which(char *x)
 char *str_concat(char *s1, char *s2)
 {
 	char *a = NULL;
-	int i, len1, len2, size;
+	int len1 = 0, len2 = 0, size = 0;
 
-	if (s1 != NULL)
-	{
-		for (len1 = 0; s1[len1] != '\0'; len1++)
-		{
-		}
-	}
-	if (s2 != NULL)
-	{
-		for (len2 = 0; s2[len2] != '\0'; len2++)
-		{
-		}
-	}
+	len1 = strlen(s1);
+	len2 = strlen(s2);
 	size = len1 + len2;
-	a = malloc(sizeof(char) * size + 1);
+	a = malloc(size + 2);
 	if (a == NULL)
 		return (NULL);
-	if (a != NULL)
-	{
-		while (i < len1)
-		{
-			a[i] = s1[i];
-			i++;
-		}
-		i = 0;
-		while (i < len2)
-		{
-			a[len1] = s2[i];
-			i++;
-			len1++;
-		}
-		a[i] = '\0';
-	}
+	strcpy(a, s1);
+	strcat(a, "/");
+	strcat(a, s2);
 	return (a);
 }
 
