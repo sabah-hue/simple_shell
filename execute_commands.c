@@ -45,16 +45,18 @@ int check_command(char **split_data)
  **/
 char *_which(char *x)
 {
-	char *path, *path_dir, *path_edit, *copy_path;
+	char *path = NULL, *path_dir = NULL, *path_edit = NULL, *copy_path = NULL;
 
 	path = _getenv("PATH");
-	if (path == NULL)
+	if (path == NULL || x == NULL)
 		return (NULL);
 	copy_path = strdup(path);
+	if (copy_path == NULL)
+		free(copy_path);
 	path_dir = _strtok(copy_path, ":");
-	while (path_dir)
+	while (path_dir && x)
 	{
-		path_edit = malloc(strlen(path_dir) + 2 + strlen(x) + 1);
+		path_edit = malloc(strlen(path_dir) + strlen(x) + 3);
 		sprintf(path_edit, "%s/%s", path_dir, x);
 		if (access(path_edit, F_OK) == 0 && access(path_edit, X_OK) == 0)
 		{
@@ -79,7 +81,7 @@ char *_which(char *x)
  **/
 char *str_concat(char *s1, char *s2)
 {
-	char *a;
+	char *a = NULL;
 	int i, len1, len2, size;
 
 	if (s1 != NULL)
@@ -129,26 +131,21 @@ void execute_commands(char **split_data)
 {
 	pid_t pid;
 
-	int status;
+	int status, i;
 	struct stat st;
-	char *full_path;
+	char *full_path = NULL;
 
 	if (split_data == NULL || split_data[0] == NULL)
 		return;
 	if (check_command(split_data))
-	{
 		return;
-	}
 	if (stat(split_data[0], &st))
 	{
 		full_path = _which(split_data[0]);
 		if (full_path)
 		{
-			split_data[0] = full_path;
-			printf("%s\n", split_data[0]);
+			split_data[0] = full_path, free(full_path);
 		}
-		else
-			free(full_path);
 	}
 	if (access(split_data[0], F_OK) == 0 && access(split_data[0], X_OK) == 0)
 	{
@@ -158,11 +155,16 @@ void execute_commands(char **split_data)
 		if (execve(split_data[0], split_data, environ) == -1)
 		{
 			perror(split_data[0]);
-			free(split_data[0]);
+			for (i = 0; split_data[i] != NULL; i++)
+			{
+				free(split_data[0]);
+			}
+			free(split_data);
 			exit(127);
 		}
 	}
 	else
 		wait(&status);
+	free(split_data);
 	}
 }

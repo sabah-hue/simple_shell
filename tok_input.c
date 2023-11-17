@@ -26,9 +26,11 @@ char *_strtok(char *line, const char *delim)
  **/
 char **tok_input(char *s, char *d, ssize_t n)
 {
-	char *copy_str = NULL, *token, **arr = NULL;
+	char *copy_str = NULL, *token = NULL, **arr = NULL;
 	int i = 0, words = 0;
 
+	if (s == NULL)
+		return (NULL);
 	copy_str = malloc(sizeof(char) * n + 1);
 	if (copy_str == NULL)
 	{
@@ -46,7 +48,7 @@ char **tok_input(char *s, char *d, ssize_t n)
 	arr = malloc(sizeof(char *) * words);
 	if (arr == NULL)
 	{
-		free(arr);
+		free(arr), free(copy_str), free(token);
 		return (NULL);
 	}
 	token = _strtok(copy_str, d);
@@ -54,10 +56,7 @@ char **tok_input(char *s, char *d, ssize_t n)
 	{
 		arr[i] = malloc(sizeof(char) * strlen(token) + 1);
 		if (arr[i] == NULL)
-		{
-			free(arr[i]);
 			return (NULL);
-		}
 		strcpy(arr[i], token);
 		token = _strtok(NULL, d);
 		i++;

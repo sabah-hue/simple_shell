@@ -12,7 +12,7 @@ char *_getenv(const char *name)
 {
 	int i = 0, index;
 	char **e = environ;
-	char *x;
+	char *x = NULL;
 
 	if (name == NULL)
 		return (NULL);

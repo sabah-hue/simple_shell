@@ -1,36 +1,6 @@
 #include "main.h"
 
 /**
- * num_words - get the number of words in a given string.
- *
- * Description: Function that calculate the number of words in string.
- * @str: String, input parameter.
- * @delimeter: Separator character between words..
- *
- * Return: Number of words, -1 if the string is NULL.
- **/
-int num_words(char *str, char *delimeter)
-{
-	int i, j, str_len = 0, words = 0;
-
-	if (str == NULL)
-		return (-1);
-	for (i = 0; *(str + i); i++)
-	{
-		str_len++;
-	}
-	for (j = 0; j < str_len; j++)
-	{
-		if (*(str + j) != *delimeter)
-		{
-			words++;
-			j = j + split_len(str + j, delimeter);
-		}
-	}
-	return (words);
-}
-
-/**
  * tokenize_input - divided the input string into words
  *
  * Description: Function that recive a string and divided into words.
@@ -42,44 +12,37 @@ int num_words(char *str, char *delimeter)
  **/
 char **tokenize_input(char *str, char *delimeter)
 {
-	char **input_data = NULL;
-	int i, j = 0, count, n, word_len;
+	char **input_data = NULL, *str_cpy = NULL, *first_word = NULL;
+	int i = 0, words = 0;
 
-	if (str == NULL || num_words(str, delimeter) == 0)
+	if (!delimeter)
+		delimeter = " ";
+	if (str == NULL)
 		return (NULL);
-	n = num_words(str, delimeter); /*memory allocation for number of words*/
-	printf("word = %d\n", n);
-	input_data = malloc(sizeof(char *) * (n + 2));
-	if (input_data == NULL)
-		return (NULL);
-	for (i = 0; i < n; i++)
+	str_cpy = strdup(str);/* copied input string*/
+	first_word = _strtok(str_cpy, delimeter);
+	while (first_word)
 	{
-		while (str[j] == *delimeter) /*stop at end of each word*/
-		{
-			j++;
-		}
-		word_len = split_len(str + j, delimeter);
-		/*M-alloc for row-2d-arr*/
-		input_data[i] = malloc(sizeof(char) * (word_len + 1));
-		if (input_data[i] == NULL)
-		{
-			j = j - 1;
-			while (j >= 0)
-			{
-				free(input_data[j]);
-				j--;
-			}
-			free(input_data);
-			return (NULL);
-		}
-		for (count = 0; count < word_len; count++)
-		{
-			input_data[i][count] = str[j];
-			j++;
-		}
-		input_data[i][count] = '\0';
+		words++;
+		first_word = _strtok(NULL, delimeter);
+	}
+	free(str_cpy);
+	/*M-alloc for row-2d-arr*/
+	if (words == 0)
+		return (NULL);
+	input_data = malloc(sizeof(char *) * (words + 1));
+	if (input_data == NULL)
+	{
+		free(input_data);
+		return (NULL);
+	}
+	first_word = _strtok(str, delimeter);
+	while (first_word)
+	{
+		input_data[i] = first_word;
+		first_word = _strtok(NULL, delimeter);
+		i++;
 	}
 	input_data[i] = NULL;
-	input_data[i + 1] = NULL;
 	return (input_data);
 }

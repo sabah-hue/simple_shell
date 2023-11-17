@@ -51,7 +51,7 @@ char *_strcpy(char *dest, char *src)
  **/
 int _strcmp(char *str1, char *str2)
 {
-	int cmp_value;
+	int cmp_value = 0;
 
 	while (*str1 && *str2 && *str1 == *str2)
 	{
@@ -94,24 +94,3 @@ int _strncmp(const char *str1, const char *str2, size_t n_cmp)
 		return (-15);
 }
 
-/**
- * split_len - count number of chars
- *
- * Description: A function that count number of char in one word.
- * @s: input string
- * @d: delimeter, separator between words.
- *
- * Return: number of char in word
- **/
-int split_len(char *s, char *d)
-{
-	int i = 0;
-	int j = 0;
-
-	while (*(s + i) && *(s + i) != *d)
-	{
-		i++;
-		j++;
-	}
-	return (j);
-}
