@@ -25,5 +25,6 @@ char *_strtok(char *line, const char *delim);
 int check_command(char **split_data);
 char *_which(char *x);
 char *str_concat(char *s1, char *s2);
+void free_arr(char **arr);
 
 #endif

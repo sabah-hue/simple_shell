@@ -56,7 +56,7 @@ char *_which(char *x)
 		return (NULL);
 	copy_path = strdup(path);
 	if (copy_path == NULL)
-		free(copy_path);
+		return (NULL);
 	path_dir = _strtok(copy_path, ":");
 	while (path_dir && x)
 	{
@@ -128,7 +128,7 @@ char *str_concat(char *s1, char *s2)
  * execute_commands - execute the command in my own shell
  *
  * Description: A function that execute command.
- * @split_data: pointer to data entered by user
+ * @split_data: pointer to data entered by user.
  *
  * Return: nothing
  **/
@@ -136,7 +136,7 @@ void execute_commands(char **split_data)
 {
 	pid_t pid;
 
-	int status, i;
+	int status;
 	struct stat st;
 	char *full_path = NULL;
 
@@ -148,13 +148,14 @@ void execute_commands(char **split_data)
 	{
 		full_path = _which(split_data[0]);
 		if (full_path)
-		{
-			split_data[0] = full_path, free(full_path);
-		}
+			split_data[0] = full_path;
 		else
-			free(full_path);
+		{
+			free(split_data);
+			return;
+		}
 	}
-	if (access(split_data[0], F_OK) == 0 && access(split_data[0], X_OK) == 0)
+	if (access(split_data[0], F_OK) == 0)
 	{
 	pid = fork();
 	if (pid == 0)
@@ -162,16 +163,33 @@ void execute_commands(char **split_data)
 		if (execve(split_data[0], split_data, environ) == -1)
 		{
 			perror(split_data[0]);
-			for (i = 0; split_data[i] != NULL; i++)
-			{
-				free(split_data[0]);
-			}
-			free(split_data);
-			exit(127);
+			free_arr(split_data), exit(127);
 		}
 	}
 	else
 		wait(&status);
 	free(split_data);
+	if (full_path)
+		free(full_path);
 	}
+	else if (full_path)
+		free(full_path);
+}
+
+/**
+ *free_arr - free 2D array
+ *
+ * Description: A function that free 2D array from heap memory
+ *
+ * Return: Nothing
+ **/
+void free_arr(char **arr)
+{
+	int i;
+
+	for (i = 0; arr[i] != NULL; i++)
+	{
+		free(arr[i]);
+	}
+	free(arr);
 }

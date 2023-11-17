@@ -32,10 +32,7 @@ char **tokenize_input(char *str, char *delimeter)
 		return (NULL);
 	input_data = malloc(sizeof(char *) * (words + 1));
 	if (input_data == NULL)
-	{
-		free(input_data);
 		return (NULL);
-	}
 	first_word = _strtok(str, delimeter);
 	while (first_word)
 	{
