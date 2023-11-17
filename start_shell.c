@@ -28,8 +28,13 @@ void start_shell(char *start_sympole, char *delimeter)
 		}
 		if (chars_r_num == -1)
 		{
-			printf("\n");
 			free(user_data);
+			return;
+		}
+		if (user_data == NULL)
+		{
+			if (isatty(STDIN_FILENO))
+				printf("\n");
 			return;
 		}
 		/*split_data = tok_input(user_data, delimeter, chars_r_num);*/
