@@ -180,7 +180,7 @@ void execute_commands(char **split_data)
  *free_arr - free 2D array
  *
  * Description: A function that free 2D array from heap memory
- *
+ * @arr: input 2D array.
  * Return: Nothing
  **/
 void free_arr(char **arr)
