@@ -14,22 +14,26 @@ int check_command(char **split_data)
 	if (!_strncmp(split_data[0], "echo", 4) && !_strncmp(split_data[1], "$?", 2))
 	{
 		printf("0\n");
+		free(split_data);
 		return (1);
 	}
 	if (!_strncmp(split_data[0], "echo", 4) && !_strncmp(split_data[1], "$$", 2))
 	{
 		my_pid = getpid();
 		printf("%u\n", my_pid);
+		free(split_data);
 		return (1);
 	}
 	if (!_strncmp(split_data[0], "env", 3))
 	{
 		show_env();
+		free(split_data);
 		return (1);
 	}
 	if (!_strncmp(split_data[0], "exit", 4) && split_data[1] != NULL)
 	{
 		printf("%s\n", split_data[1]);
+		free(split_data);
 		return (1);
 	}
 	return (0);
@@ -67,6 +71,7 @@ char *_which(char *x)
 		path_dir = _strtok(NULL, ":");
 	}
 	perror(_getenv("_"));
+	free(copy_path);
 	return (NULL);
 }
 
@@ -146,6 +151,8 @@ void execute_commands(char **split_data)
 		{
 			split_data[0] = full_path, free(full_path);
 		}
+		else
+			free(full_path);
 	}
 	if (access(split_data[0], F_OK) == 0 && access(split_data[0], X_OK) == 0)
 	{
